@@ -1,0 +1,16 @@
+{
+    "name": "stock",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node ./.esbuild/server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "esbuild": "^0.20.0",
+        "esbuild-minify-templates": "^0.11.0"
+    }
+}
