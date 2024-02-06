@@ -2,7 +2,8 @@ const { MOCK_DOMAIN } = require("./constants");
 const { appkey, appsecret } = require("./config");
 const { getAccessToken } = require("./handleToken");
 
-async function InquirePrice() {
+// 주식 현재가 시세
+async function inquirePrice() {
     const accessToken = await getAccessToken();
 
     const searchParams = new URLSearchParams({
@@ -27,7 +28,7 @@ async function InquirePrice() {
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         const data = await response.json();
 
-        console.log("InquirePrice", data);
+        console.log("InquirePrice: ", data);
 
         if (data.rt_cd === "0") return data.output;
         else console.log(`실패: ${data.msg_cd}, ${data.msg1}`);
@@ -37,4 +38,4 @@ async function InquirePrice() {
     }
 }
 
-InquirePrice();
+inquirePrice();

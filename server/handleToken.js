@@ -66,6 +66,8 @@ async function readTokenFromFile() {
         const data = await fs.readFileSync(TOKEN_PATH, "utf-8");
         if (!data) return null;
 
+        console.log("readTokenFromFile");
+
         const token = JSON.parse(data);
         if (!token.access_token) return;
         return token;
