@@ -17,10 +17,9 @@ async function createAccessToken() {
 
     try {
         const response = await fetch(url, options);
+        console.log("createAccessToken", response.json());
+
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-
-        console.log("Create Token", response.json());
-
         return await response.json();
     } catch (error) {
         console.error("Error fetching access token:", error);
@@ -29,6 +28,8 @@ async function createAccessToken() {
 }
 
 async function revokeAccessToken(token) {
+    console.log("revokeAccessToken");
+
     const url = `${MOCK_DOMAIN}/oauth2/revokeP`;
     const options = {
         method: "POST",
