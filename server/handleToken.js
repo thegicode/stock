@@ -17,10 +17,10 @@ async function createAccessToken() {
 
     try {
         const response = await fetch(url, options);
-        console.log("createAccessToken", response.json());
-
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-        return await response.json();
+        const data = await response.json();
+        console.log("createAccessToken: ", data);
+        return data;
     } catch (error) {
         console.error("Error fetching access token:", error);
         throw error;
@@ -91,15 +91,15 @@ async function getAccessToken() {
     }
 }
 
-async function useAccessToken() {
-    try {
-        const accessToken = await getAccessToken();
-        console.log("Access Token:", accessToken);
-    } catch (error) {
-        console.error("Error using access token:", error);
-    }
-}
-useAccessToken();
+// async function useAccessToken() {
+//     try {
+//         const accessToken = await getAccessToken();
+//         console.log("Access Token:", accessToken);
+//     } catch (error) {
+//         console.error("Error using access token:", error);
+//     }
+// }
+// useAccessToken();
 
 module.exports = {
     createAccessToken,
