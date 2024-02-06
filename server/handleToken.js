@@ -1,7 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 
-const { MOCK_DOMAIN, TOKEN_PATH } = require("./constants");
+const { MOCK_DOMAIN } = require("./constants");
 const { appkey, appsecret } = require("./config");
+
+const TOKEN_PATH = path.resolve("./accessToken.json");
 
 async function createAccessToken() {
     const url = `${MOCK_DOMAIN}/oauth2/tokenP`;
