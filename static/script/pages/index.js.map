@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../../src/script/pages/index.js"],
-  "sourcesContent": ["// var myHeaders = new Headers();\n// myHeaders.append(\"content-type\", \"application/json\");\n// myHeaders.append(\"authorization\", \"Bearer \");\n// myHeaders.append(\"appkey\", \"\");\n// myHeaders.append(\"appsecret\", \"\");\n// myHeaders.append(\"tr_id\", \"FHKST01010100\");\n\n// var raw = \"\";\n\n// var requestOptions = {\n//   method: 'GET',\n//   headers: myHeaders,\n//   body: raw,\n//   redirect: 'follow'\n// };\n\n// fetch(\"https://openapivts.koreainvestment.com:29443/uapi/domestic-stock/v1/quotations/inquire-price?fid_cond_mrkt_div_code=J&fid_input_iscd=005930\", requestOptions)\n//   .then(response => response.text())\n//   .then(result => console.log(result))\n//   .catch(error => console.log('error', error));\n\nconsole.log(\"stock index\");\n"],
-  "mappings": ";;AAqBA,UAAQ,IAAI,aAAa;",
+  "sourcesContent": ["console.log(\"stock index\");\n"],
+  "mappings": ";;AAAA,UAAQ,IAAI,aAAa;",
   "names": []
 }

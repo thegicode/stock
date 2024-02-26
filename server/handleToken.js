@@ -1,13 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 
-const { MOCK_DOMAIN } = require("./constants");
+const { MOCK_DOMAIN, URL } = require("./constants");
 const { appkey, appsecret } = require("./config");
 
-const TOKEN_PATH = path.resolve("./accessToken.json");
+const TOKEN_PATH = path.resolve("./server/config/accessToken.json");
 
 async function createAccessToken() {
-    const url = `${MOCK_DOMAIN}/oauth2/tokenP`;
+    const requestURL = `${MOCK_DOMAIN}${URL.ACCESS_TOKEN}`;
     const options = {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -19,10 +19,9 @@ async function createAccessToken() {
     };
 
     try {
-        const response = await fetch(url, options);
-        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+        const response = await fetch(requestURL, options);
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
         const data = await response.json();
-        console.log("createAccessToken: ", data);
         return data;
     } catch (error) {
         console.error("Error fetching access token:", error);
@@ -33,7 +32,7 @@ async function createAccessToken() {
 async function revokeAccessToken(token) {
     console.log("revokeAccessToken");
 
-    const url = `${MOCK_DOMAIN}/oauth2/revokeP`;
+    const requestURL = `${MOCK_DOMAIN}${URL.REVOKE_ACCESS_TOKEN}`;
     const options = {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -45,8 +44,9 @@ async function revokeAccessToken(token) {
     };
 
     try {
-        const response = await fetch(url, options);
-        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+        const response = await fetch(requestURL, options);
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        await saveAccessToken("{}");
         return await response.json();
     } catch (error) {
         console.error("Error revokeing access token:", error);
@@ -54,7 +54,7 @@ async function revokeAccessToken(token) {
     }
 }
 
-async function saveTokenToFile(token) {
+async function saveAccessToken(token) {
     try {
         if (!token.access_token) return;
         await fs.writeFileSync(TOKEN_PATH, JSON.stringify(token, null, 2));
@@ -64,12 +64,12 @@ async function saveTokenToFile(token) {
     }
 }
 
-async function readTokenFromFile() {
+async function readAccessToken() {
     try {
         const data = await fs.readFileSync(TOKEN_PATH, "utf-8");
         if (!data) return null;
 
-        console.log("readTokenFromFile");
+        console.log("readAccessToken");
 
         const token = JSON.parse(data);
         if (!token.access_token) return;
@@ -82,14 +82,33 @@ async function readTokenFromFile() {
 
 async function getAccessToken() {
     try {
-        const token = await readTokenFromFile();
-        if (token && new Date(token.access_token_token_expired) > new Date()) {
-            return token.access_token;
-        } else {
-            const createdToken = await createAccessToken();
-            await saveTokenToFile(createdToken);
-            return createdToken.access_token;
+        const token = await readAccessToken();
+
+        console.log("getAccessToken token", token);
+
+        if (token) {
+            if (new Date(token.access_token_token_expired) > new Date()) {
+                return token.access_token;
+            } else {
+                revokeAccessToken(token);
+            }
         }
+
+        const createdToken = await createAccessToken();
+
+        await saveAccessToken(createdToken);
+
+        return createdToken.access_token;
+
+        // if (token && new Date(token.access_token_token_expired) > new Date()) {
+        //     return token.access_token;
+        // } else {
+        //     if (token) revokeAccessToken(token);
+        //     const createdToken = await createAccessToken();
+        //     console.log("createdToken", createdToken.access_token);
+        //     await saveAccessToken(createdToken);
+        //     return createdToken.access_token;
+        // }
     } catch (error) {
         console.error("Error getting access token:", error);
         throw error;
@@ -109,7 +128,7 @@ async function getAccessToken() {
 module.exports = {
     createAccessToken,
     revokeAccessToken,
-    saveTokenToFile,
-    readTokenFromFile,
+    saveAccessToken,
+    readAccessToken,
     getAccessToken,
 };

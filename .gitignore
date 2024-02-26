@@ -1,3 +1,2 @@
 /node_modules/
-/server/accessToken.json
-/server/.env
+/server/config/*
