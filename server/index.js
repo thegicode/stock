@@ -1,5 +1,5 @@
-const accessToken = require("./config/accessToken.json");
-const key = require("./config/key.json");
+const { appkey, appsecret, accessToken } = require("../config");
 
-console.log("accessToken", accessToken);
-console.log("key : ", key);
+console.log("appkey", appkey);
+console.log("appsecret : ", appsecret);
+console.log("accessToken : ", accessToken);

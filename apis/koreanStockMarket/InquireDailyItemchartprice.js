@@ -1,6 +1,6 @@
-const { MOCK_DOMAIN } = require("./constants");
-const { appkey, appsecret } = require("./config");
-const { getAccessToken } = require("./handleToken");
+const { DOMAIN } = require("../../constants");
+const { appkey, appsecret } = require("../../config");
+const { getAccessToken } = require("../../server/handleToken");
 
 // 국내주식기간별시세(일/주/월/년)[v1_국내주식-016]
 async function inquireDailyItemchartprice() {
@@ -15,7 +15,7 @@ async function inquireDailyItemchartprice() {
         fid_org_adj_prc: "1", // 0:수정주가 1:원주가
     });
 
-    const url = `${MOCK_DOMAIN}/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice?${searchParams}`;
+    const url = `${DOMAIN}/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice?${searchParams}`;
     const options = {
         method: "GET",
         headers: {

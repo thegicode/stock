@@ -1,13 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 
-const { MOCK_DOMAIN, URL } = require("./constants");
-const { appkey, appsecret } = require("./config");
+const { DOMAIN, URL } = require("../constants");
+const { appkey, appsecret } = require("../config");
 
-const TOKEN_PATH = path.resolve("./server/config/accessToken.json");
+const TOKEN_PATH = path.resolve("./config/accessToken.json");
 
 async function createAccessToken() {
-    const requestURL = `${MOCK_DOMAIN}${URL.ACCESS_TOKEN}`;
+    const requestURL = `${DOMAIN}${URL.ACCESS_TOKEN}`;
     const options = {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -32,7 +32,7 @@ async function createAccessToken() {
 async function revokeAccessToken(token) {
     console.log("revokeAccessToken");
 
-    const requestURL = `${MOCK_DOMAIN}${URL.REVOKE_ACCESS_TOKEN}`;
+    const requestURL = `${DOMAIN}${URL.REVOKE_ACCESS_TOKEN}`;
     const options = {
         method: "POST",
         headers: { "content-type": "application/json" },
