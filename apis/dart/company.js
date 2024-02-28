@@ -1,4 +1,4 @@
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 // 기업개황
 async function company(corpCode) {

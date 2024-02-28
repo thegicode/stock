@@ -1,4 +1,4 @@
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 // 조건부 자본증권 미상환 잔액
 async function cndlCaplScritsNrdmpBlce(corpCode, year, partCode) {

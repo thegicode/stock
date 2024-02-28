@@ -3,7 +3,7 @@ const xml2js = require("xml2js");
 const fs = require("fs");
 const path = require("path");
 
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 await function saveCorpCode() {
     const url = "https://opendart.fss.or.kr/api/corpCode.xml";

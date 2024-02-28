@@ -104,7 +104,7 @@ async function getList() {
     };
     console.log("공시검색 : list", await list(params));
 }
-// getList();
+getList();
 
 // 재무제표 원본파일(XBRL) -- TODO
 async function getFnlttXbrl() {
@@ -113,4 +113,4 @@ async function getFnlttXbrl() {
         await fnlttXbrl(corpCode, "2023", "20220127800045", reprtCode.part1)
     );
 }
-getFnlttXbrl();
+// getFnlttXbrl();

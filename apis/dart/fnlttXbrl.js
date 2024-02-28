@@ -3,7 +3,7 @@ const JSZip = require("jszip");
 const fs = require("fs");
 const path = require("path");
 
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 // 재무제표 원본파일(XBRL)
 async function fnlttXbrl(rceptNo, reprtCode) {

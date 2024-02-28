@@ -1,4 +1,4 @@
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 // 단일회사 주요 재무지표
 async function fnlttSinglIndx(corpCode, yearCode, reprtCode, idxClCode) {

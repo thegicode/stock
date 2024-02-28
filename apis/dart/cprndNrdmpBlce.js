@@ -1,4 +1,4 @@
-const { dartkey } = require("../config");
+const { dartkey } = require("../../config");
 
 // 회사채 미상환 잔액
 async function cprndNrdmpBlce(corpCode, yearCode, reprtCode) {
