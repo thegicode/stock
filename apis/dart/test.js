@@ -6,6 +6,7 @@ const {
     fnlttSinglAcntAll,
     fnlttXbrl,
     list,
+    saveCorpCode,
 } = require("./index");
 
 // NAVER
@@ -40,6 +41,9 @@ const pblntfTy = {
     i: "I", // 거래소공시
     j: "J", // 공정위공시
 };
+
+// 고유번호
+saveCorpCode();
 
 // 기업개황
 async function getCompany() {
@@ -104,7 +108,7 @@ async function getList() {
     };
     console.log("공시검색 : list", await list(params));
 }
-getList();
+// getList();
 
 // 재무제표 원본파일(XBRL) -- TODO
 async function getFnlttXbrl() {

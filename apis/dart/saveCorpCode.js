@@ -5,7 +5,8 @@ const path = require("path");
 
 const { dartkey } = require("../../config");
 
-await function saveCorpCode() {
+// 고유번호
+async function saveCorpCode() {
     const url = "https://opendart.fss.or.kr/api/corpCode.xml";
     const params = new URLSearchParams({ crtfc_key: dartkey });
 
@@ -20,7 +21,7 @@ await function saveCorpCode() {
             const xmlContent = await zip.file("CORPCODE.xml").async("string");
 
             // Save the XML content to a file
-            const outputPath = path.join(__dirname, "../data/CORPCODE.xml");
+            const outputPath = path.join(__dirname, "../../data/CORPCODE.xml");
             fs.writeFileSync(outputPath, xmlContent, "utf8");
 
             console.log(`File saved to ${outputPath}`);
@@ -42,6 +43,6 @@ await function saveCorpCode() {
         .catch((error) => {
             console.error(error);
         });
-};
+}
 
 module.exports = saveCorpCode;

@@ -4,7 +4,7 @@ const cprndNrdmpBlce = require("./cprndNrdmpBlce");
 const fnlttSinglIndx = require("./fnlttSinglIndx");
 const fnlttSinglAcntAll = require("./fnlttSinglAcntAll");
 const fnlttXbrl = require("./fnlttXbrl");
-// const saveCorpCode = require("./saveCorpCode");
+const saveCorpCode = require("./saveCorpCode");
 const list = require("./list");
 
 module.exports = {
@@ -14,6 +14,6 @@ module.exports = {
     fnlttSinglIndx,
     fnlttSinglAcntAll,
     fnlttXbrl,
-    // saveCorpCode,
+    saveCorpCode,
     list,
 };

@@ -25,7 +25,7 @@ async function fnlttXbrl(rceptNo, reprtCode) {
             const xmlContent = await zip.file("fnlttXbrl.xml").async("string");
 
             // Save the XML content to a file
-            const outputPath = path.join(__dirname, "../data/fnlttXbrl.xml");
+            const outputPath = path.join(__dirname, "../../data/fnlttXbrl.xml");
             fs.writeFileSync(outputPath, xmlContent, "utf8");
 
             console.log(`File saved to ${outputPath}`);
