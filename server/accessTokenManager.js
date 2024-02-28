@@ -69,9 +69,10 @@ async function readAccessToken() {
         const data = await fs.readFileSync(TOKEN_PATH, "utf-8");
         if (!data) return null;
 
-        console.log("readAccessToken");
-
         const token = JSON.parse(data);
+
+        console.log("readAccessToken", token);
+
         if (!token.access_token) return;
         return token;
     } catch (error) {
@@ -89,8 +90,6 @@ async function getAccessToken() {
         if (token) {
             if (new Date(token.access_token_token_expired) > new Date()) {
                 return token.access_token;
-            } else {
-                revokeAccessToken(token);
             }
         }
 

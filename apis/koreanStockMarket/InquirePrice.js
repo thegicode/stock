@@ -1,6 +1,6 @@
 const { appkey, appsecret } = require("../../config");
 const { DOMAIN, URL } = require("../../constants");
-const { getAccessToken } = require("../../server/handleToken");
+const { getAccessToken } = require("../../server/accessTokenManager");
 
 // 주식 현재가 시세
 async function inquirePrice() {

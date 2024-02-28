@@ -1,11 +1,14 @@
 const { minifyTemplates, writeFiles } = require("esbuild-minify-templates");
 
-const entryPoints = ["./src/script/pages/index.js"];
+const entryPoints = [
+    "./app/src/scripts/pages/aPage/index.ts",
+    "./app/src/scripts/pages/bPage/index.ts",
+];
 
 module.exports = {
-    outbase: "./src/",
     entryPoints,
-    outdir: "./static/",
+    outbase: "./app/src/",
+    outdir: "./app/static/",
     entryNames: "[dir]/[name]",
     plugins: [minifyTemplates(), writeFiles()],
     target: "es6",

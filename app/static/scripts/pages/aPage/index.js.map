@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/scripts/pages/aPage/index.ts"],
+  "sourcesContent": ["console.log(\"aPage\");\n"],
+  "mappings": ";;AAAA,UAAQ,IAAI,OAAO;",
+  "names": []
+}

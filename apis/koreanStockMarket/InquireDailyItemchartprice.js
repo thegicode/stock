@@ -1,6 +1,6 @@
 const { DOMAIN } = require("../../constants");
 const { appkey, appsecret } = require("../../config");
-const { getAccessToken } = require("../../server/handleToken");
+const { getAccessToken } = require("../../server/accessTokenManager");
 
 // 국내주식기간별시세(일/주/월/년)[v1_국내주식-016]
 async function inquireDailyItemchartprice() {

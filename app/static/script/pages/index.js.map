@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/script/pages/index.js"],
-  "sourcesContent": ["console.log(\"stock index\");\n"],
-  "mappings": ";;AAAA,UAAQ,IAAI,aAAa;",
-  "names": []
-}
