@@ -1,6 +1,7 @@
 const company = require("./company");
 const cndlCaplScritsNrdmpBlce = require("./cndlCaplScritsNrdmpBlce");
 const cprndNrdmpBlce = require("./cprndNrdmpBlce");
+const fnlttSinglAcnt = require("./fnlttSinglAcnt");
 const fnlttSinglAcntAll = require("./fnlttSinglAcntAll");
 const fnlttSinglIndx = require("./fnlttSinglIndx");
 const fnlttXbrl = require("./fnlttXbrl");
@@ -11,6 +12,7 @@ module.exports = {
     company,
     cndlCaplScritsNrdmpBlce,
     cprndNrdmpBlce,
+    fnlttSinglAcnt,
     fnlttSinglAcntAll,
     fnlttSinglIndx,
     fnlttXbrl,

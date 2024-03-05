@@ -3,6 +3,7 @@ const {
     cndlCaplScritsNrdmpBlce,
     cprndNrdmpBlce,
     fnlttSinglIndx,
+    fnlttSinglAcnt,
     fnlttSinglAcntAll,
     fnlttXbrl,
     list,
@@ -76,21 +77,22 @@ async function getFnlttSinglAcntAll() {
         await fnlttSinglAcntAll(
             corpCode,
             "2023",
-            reprtCode.part2,
-            fsDivCode.part1
+            reprtCode.part3,
+            fsDivCode.part2
         )
     );
 }
-// getFnlttSinglAcntAll();
+// 연결재무재표 유동자산, 유동부채
+getFnlttSinglAcntAll();
 
 // 단일회사 주요 재무지표
 async function getCprndNrdmpBlce() {
     console.log(
-        " 회사채 미상환 잔액 : cprndNrdmpBlce",
+        " 단일회사 주요 재무지표 : cprndNrdmpBlce",
         await fnlttSinglIndx(corpCode, "2023", reprtCode.part3, idxClCode.part1)
     );
 }
-// getCprndNrdmpBlce();
+getCprndNrdmpBlce();
 
 // 공시검색
 async function getList() {
@@ -118,3 +120,21 @@ async function getFnlttXbrl() {
     );
 }
 // getFnlttXbrl();
+
+/* 상장기업 재무정보 */
+
+// 단일회사 주요계정
+async function getFnlttSinglAcnt() {
+    console.log(
+        " 단일회사 주요계정 : fnlttSinglAcnt",
+        await fnlttSinglAcnt(
+            corpCode,
+            "2023",
+            "20220127800045",
+            reprtCode.part3
+        )
+    );
+}
+
+// getFnlttSinglAcnt();
+// 유동자산, 유동부채

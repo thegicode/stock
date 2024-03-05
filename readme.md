@@ -6,4 +6,6 @@
 
 -   [금융감독원 OPEN API](https://opendart.fss.or.kr/intro/main.do)
 
+    -   단일회사 전체 재무제표
+
 -   [DART-FSS](https://dart-fss.readthedocs.io/en/latest/index.html)
