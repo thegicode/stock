@@ -7,8 +7,8 @@ const entryPoints = [
 
 module.exports = {
     entryPoints,
-    outbase: "./app/src/",
-    outdir: "./app/static/",
+    outbase: "./app/src/scripts/pages/",
+    outdir: "./app/static/js/",
     entryNames: "[dir]/[name]",
     plugins: [minifyTemplates(), writeFiles()],
     target: "es6",

@@ -6,8 +6,10 @@ const portNumber = 3000;
 async function server() {
     let esContext = await esbuild.context(options);
 
+    // await esContext.watch();
+
     const { host, port } = await esContext.serve({
-        servedir: "./app/static",
+        servedir: ".",
         host: "localhost",
         port: portNumber,
         // fallback: 'www/404.html',

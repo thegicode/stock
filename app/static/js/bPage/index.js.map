@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "sources": ["../../../../src/scripts/pages/bPage/index.ts"],
+  "sources": ["../../../src/scripts/pages/bPage/index.ts"],
   "sourcesContent": ["console.log(\"bPage\");\n"],
   "mappings": ";;AAAA,UAAQ,IAAI,OAAO;",
   "names": []

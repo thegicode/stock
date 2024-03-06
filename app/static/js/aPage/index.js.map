@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/scripts/components/utils.ts", "../../../src/scripts/pages/aPage/index.ts"],
+  "sourcesContent": ["const a = \"a\";\n\nexport { a };\n", "import { a } from \"../../components/utils\";\n\nconsole.log(\"aPage\", a);\n"],
+  "mappings": ";;AAAA,MAAM,IAAI;;;ACEV,UAAQ,IAAI,SAAS,CAAC;",
+  "names": []
+}
