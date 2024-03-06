@@ -3,6 +3,8 @@ const options = require("./options.js");
 const http = require("node:http");
 const portNumber = 3000;
 
+const apiRoutes = require("../server/apiRoutes");
+
 async function server() {
     let esContext = await esbuild.context(options);
 
@@ -19,6 +21,10 @@ async function server() {
     });
 
     http.createServer((req, res) => {
+        if (apiRoutes[req.url] && req.method === "GET") {
+            return apiRoutes[req.url](req, res);
+        }
+
         const options = {
             hostname: host,
             port: port,
@@ -27,7 +33,7 @@ async function server() {
             headers: req.headers,
         };
 
-        console.log("http:options", JSON.stringify(options));
+        // console.log("http:options", JSON.stringify(options));
 
         const proxyReq = http.request(options, (proxyRes) => {
             if (proxyRes.statusCode === 404) {
