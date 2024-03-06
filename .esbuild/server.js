@@ -9,7 +9,7 @@ async function server() {
     // await esContext.watch();
 
     const { host, port } = await esContext.serve({
-        servedir: ".",
+        servedir: "./app/static",
         host: "localhost",
         port: portNumber,
         // fallback: 'www/404.html',

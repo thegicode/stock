@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../../src/scripts/components/utils.ts", "../../../src/scripts/pages/aPage/index.ts"],
-  "sourcesContent": ["const a = \"a\";\n\nexport { a };\n", "import { a } from \"../../components/utils\";\n\nconsole.log(\"aPage\", a);\n"],
-  "mappings": ";;AAAA,MAAM,IAAI;;;ACEV,UAAQ,IAAI,SAAS,CAAC;",
+  "sourcesContent": ["const a = \"a\";\n\nexport { a };\n", "import { a } from \"../../components/utils\";\n\n// // \uB2E8\uC77C\uD68C\uC0AC \uC8FC\uC694 \uC7AC\uBB34\uC9C0\uD45C\n// async function getCprndNrdmpBlce() {\n//     console.log(\n//         \" \uB2E8\uC77C\uD68C\uC0AC \uC8FC\uC694 \uC7AC\uBB34\uC9C0\uD45C : cprndNrdmpBlce\",\n//         await fnlttSinglIndx(corpCode, \"2023\", reprtCode.part3, idxClCode.part1)\n//     );\n// }\n// getCprndNrdmpBlce();\n\nconsole.log(\"aPage\", a);\n"],
+  "mappings": ";;AAAA,MAAM,IAAI;;;ACWV,UAAQ,IAAI,SAAS,CAAC;",
   "names": []
 }
