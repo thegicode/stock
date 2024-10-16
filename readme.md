@@ -13,3 +13,8 @@
 ## URL
 
 -   [aPage](http://localhost:3000/html/aPage.html)
+
+## ing
+
+-   set api routes
+-   조건검색한 종목으로 안전마진 계산
