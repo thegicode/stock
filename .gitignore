@@ -2,3 +2,7 @@
 /config/*
 /data/CORPCODE.xml
 etc.md
+
+venv/
+.env
+__pycache__/
