@@ -8,6 +8,10 @@ source venv/bin/activate
 python3 -m venv venv
 requirements.txt
 
+# Backtest
+
+python3 v2/backtest/sma_backtest.py
+
 # 해외 주식 api
 
 -   [Alpha Vantage](https://www.alphavantage.co/documentation/)
