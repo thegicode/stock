@@ -1,8 +1,16 @@
-python3 -m venv venv
+# 실행
 
+cd /Users/deokim/Documents/코딩/project-my/stock
 source venv/bin/activate
 
-pip install python-dotenv
-pip install requests
+# 초기 설치
 
-pip freeze > requirements.txt
+python3 -m venv venv
+requirements.txt
+
+# 해외 주식 api
+
+-   [Alpha Vantage](https://www.alphavantage.co/documentation/)
+-   [Yahoo Finance](https://www.financeapi.net)
+-   [Google Finance](https://serpapi.com/google-finance-api)
+-   Quandl

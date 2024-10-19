@@ -6,3 +6,6 @@ etc.md
 venv/
 .env
 __pycache__/
+
+
+v2/data/
