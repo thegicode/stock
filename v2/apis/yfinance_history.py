@@ -26,10 +26,11 @@ def save_ticker_data_to_csv(ticker_symbol, days):
 
     # 티커의 과거 데이터를 가져오기
     ticker_history = ticker.history(start=start_date, end=end_date)
+    ticker_history = ticker_history.reset_index().rename(columns={'Date': 'Time'})
 
     # 파일 저장 경로
     directory = DATA_PATH
-    csv_filename = f"{ticker_symbol}_history_{days}d.csv"
+    csv_filename = f"{ticker_symbol}_history.csv"
     csv_path = os.path.join(directory, csv_filename)
 
     # 디렉토리가 없으면 생성
@@ -45,8 +46,9 @@ def save_ticker_data_to_csv(ticker_symbol, days):
 # 함수 실행 예시
 if __name__ == "__main__":
     # VOO의 과거 100일 데이터를 저장
-    save_ticker_data_to_csv("QQQ", 300)
-    save_ticker_data_to_csv("VOO", 300)
-    save_ticker_data_to_csv("SCHD", 300)
+    count = 1000
+    save_ticker_data_to_csv("QQQ", count)
+    save_ticker_data_to_csv("VOO", count)
+    save_ticker_data_to_csv("SCHD", count)
 
    
