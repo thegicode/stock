@@ -47,8 +47,12 @@ def save_ticker_data_to_csv(ticker_symbol, days):
 if __name__ == "__main__":
     # VOO의 과거 100일 데이터를 저장
     count = 1000
-    save_ticker_data_to_csv("QQQ", count)
-    save_ticker_data_to_csv("VOO", count)
-    save_ticker_data_to_csv("SCHD", count)
+    # save_ticker_data_to_csv("QQQ", count)
+    # save_ticker_data_to_csv("VOO", count)
+    # save_ticker_data_to_csv("SCHD", count)
+    # save_ticker_data_to_csv("AAPL", count)
+    # save_ticker_data_to_csv("NVDA", count)
+    save_ticker_data_to_csv("TSLA", count)
+
 
    

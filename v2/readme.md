@@ -18,3 +18,8 @@ python3 v2/backtest/sma_backtest.py
 -   [Yahoo Finance](https://www.financeapi.net)
 -   [Google Finance](https://serpapi.com/google-finance-api)
 -   Quandl
+
+## 백테스트 결과
+
+-   테슬라 : 20일 이동평균
+-   엔비디아 : 120일 이동평균

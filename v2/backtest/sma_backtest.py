@@ -11,6 +11,7 @@ from v2.utils.finantial_utils import calculate_moving_averages, signal_positions
 from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order
 from v2.utils.performance_utils import calculate_performance, format_backtest_results
 from v2.utils.file_utils import load_data, save_performance_to_file, save_trades_to_file
+from v2.utils.time_utils import extract_periods
 
 # 매매 전략 시뮬레이션
 def sma_trading_simulation(df, initial_capital, sma_window, trading_fee):
@@ -51,6 +52,9 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         df = load_data(f'{ticker}_history.csv', count + window)
         df = calculate_moving_averages(df.copy(), window)
         df = df.tail(count)
+
+        first_date, last_date = extract_periods(df)
+
         df = signal_positions_sma(df, window)
 
         # 매매 시뮬레이션 실행
@@ -60,7 +64,7 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         save_trades_to_file(trades_df, f'SMA/SMA_{ticker}', f'SMA_{ticker}_{window}MA')
 
         # 성과 계산 및 'Window' 열 추가
-        performance_df = calculate_performance(trades_df, initial_capital)
+        performance_df = calculate_performance(trades_df, initial_capital, first_date, last_date)
         performance_df.insert(0, 'Window', window)
 
         results.append(performance_df)
@@ -87,8 +91,8 @@ def sma_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, windows=[5,
 
 if __name__ == "__main__":
     # 백테스트 실행 및 결과 출력
-    tickers = ["VOO", "QQQ", "SCHD"]
-    count = 300
+    tickers = ["NVDA"]
+    count = 600
     capital = 10000
     windows = [5, 20, 60, 120]
     fee = 0.001

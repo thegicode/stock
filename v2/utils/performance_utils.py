@@ -10,7 +10,7 @@ sys.path.append(project_root)  # 루트 경로를 sys.path에 추가
 from v2.utils.time_utils import extract_periods
 
 
-def calculate_performance(trades_df, initial_capital=10000):
+def calculate_performance(trades_df, initial_capital, first_date, last_date ):
     """매매 전략의 성과 지표를 계산합니다."""
 
     trade_count = calculate_trade_count(trades_df)
@@ -20,8 +20,6 @@ def calculate_performance(trades_df, initial_capital=10000):
     win_rate = calculate_win_rate(trades_df)
 
     mdd_percent = binance_calculate_mdd(trades_df, initial_capital)
-
-    first_date, last_date = extract_periods(trades_df)
 
     performance =  {
         'Trades': trade_count,
