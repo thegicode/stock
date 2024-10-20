@@ -7,7 +7,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '../../'))  # 루트 경로로 설정
 sys.path.append(project_root)  # 루트 경로를 sys.path에 추가
 
-from v2.config.constants import DATA_PATH
+from v2.config.constants import DATA_PATH, TICKERS
 
 
 def save_ticker_data_to_csv(ticker_symbol, days):
@@ -45,14 +45,10 @@ def save_ticker_data_to_csv(ticker_symbol, days):
 
 # 함수 실행 예시
 if __name__ == "__main__":
-    # VOO의 과거 100일 데이터를 저장
+    tickers = TICKERS
     count = 1000
-    # save_ticker_data_to_csv("QQQ", count)
-    # save_ticker_data_to_csv("VOO", count)
-    # save_ticker_data_to_csv("SCHD", count)
-    # save_ticker_data_to_csv("AAPL", count)
-    # save_ticker_data_to_csv("NVDA", count)
-    save_ticker_data_to_csv("TSLA", count)
-
+    for ticker in tickers:
+        save_ticker_data_to_csv(ticker, count)
+   
 
    

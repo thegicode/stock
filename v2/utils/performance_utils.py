@@ -23,8 +23,8 @@ def calculate_performance(trades_df, initial_capital, first_date, last_date ):
 
     performance =  {
         'Trades': trade_count,
-        'Profit': total_profit,
         'Return (%)': total_returns,
+        'Profit': total_profit,
         'Win Rate (%)': win_rate,
         'Max Drawdown (%)': mdd_percent,
         'Periods': f"{first_date} ~ {last_date}"
@@ -120,19 +120,21 @@ def binance_calculate_mdd(trades_df, initial_capital):
     return max_drawdown
 
 
-
-def format_backtest_results(backtest_results, backtest_name):
+def format_backtest_results(backtest_results, backtest_name, count):
     """백테스트 결과를 포맷팅하여 출력"""
     output = "-" * 100
-    output += f"\n{backtest_name}"
+    output += f"\n{backtest_name} : {count} count"
 
     for symbol, performance_df in backtest_results.items():
         # 심볼과 기간 출력
         output += f"\n\n{symbol}\n"
-        # output += f"Period: {first_date} ~ {last_date}\n"
+
+        # 소수점 반올림 작업을 한 번에 처리
+        cols_to_round = ['Return (%)', 'Profit', 'Win Rate (%)', 'Max Drawdown (%)']
+        performance_df[cols_to_round] = performance_df[cols_to_round].round(2)
 
         # 필요한 열만 선택하여 문자열로 변환
-        output += performance_df[['Window', 'Trades', 'Profit', 'Return (%)', 'Win Rate (%)', 'Max Drawdown (%)', 'Periods']].to_string(index=False)
+        output += performance_df[['Window', 'Trades', 'Return (%)', 'Profit', 'Win Rate (%)', 'Max Drawdown (%)', 'Periods']].to_string(index=False)
         output += "\n"
 
     return output

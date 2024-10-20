@@ -12,6 +12,7 @@ from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order
 from v2.utils.performance_utils import calculate_performance, format_backtest_results
 from v2.utils.file_utils import load_data, save_performance_to_file, save_trades_to_file
 from v2.utils.time_utils import extract_periods
+from v2.config.constants import TICKERS
 
 # 매매 전략 시뮬레이션
 def sma_trading_simulation(df, initial_capital, sma_window, trading_fee):
@@ -90,9 +91,8 @@ def sma_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, windows=[5,
 
 
 if __name__ == "__main__":
-    # 백테스트 실행 및 결과 출력
-    tickers = ["NVDA"]
-    count = 600
+    tickers = TICKERS
+    count = 365
     capital = 10000
     windows = [5, 20, 60, 120]
     fee = 0.001
@@ -101,5 +101,5 @@ if __name__ == "__main__":
     results = sma_backtest_batch_run(tickers, count, capital, windows, fee)
 
     # 결과 출력
-    output = format_backtest_results(results, "SMA Backtest")
+    output = format_backtest_results(results, "SMA Backtest", count)
     print(output)
