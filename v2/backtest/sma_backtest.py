@@ -54,8 +54,6 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         df = calculate_moving_averages(df.copy(), window)
         df = df.tail(count)
 
-        first_date, last_date = extract_periods(df)
-
         df = signal_positions_sma(df, window)
 
         # 매매 시뮬레이션 실행
@@ -65,6 +63,7 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         save_trades_to_file(trades_df, f'SMA/SMA_{ticker}', f'SMA_{ticker}_{window}MA')
 
         # 성과 계산 및 'Window' 열 추가
+        first_date, last_date = extract_periods(df)
         performance_df = calculate_performance(trades_df, initial_capital, first_date, last_date)
         performance_df.insert(0, 'Window', window)
 

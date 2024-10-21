@@ -8,9 +8,25 @@ source venv/bin/activate
 python3 -m venv venv
 requirements.txt
 
-# Backtest
+---
 
+# 함수
+
+## apis
+
+데이터 다운
+python3 v2/apis/yfinance_history.py
+
+## Backtest
+
+Backtest Runner
+python3 v2/backtest/backtest_runner.py
+
+SMA
 python3 v2/backtest/sma_backtest.py
+
+Golden Cross
+python3 v2/backtest/goden_cross_backtest.py
 
 # 해외 주식 api
 
