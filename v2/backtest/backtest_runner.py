@@ -27,7 +27,7 @@ def run_backtests(tickers, count=365, capital=10000, windows=[5, 20, 60, 120], w
 
 def evaluate_backtest_results(tickers):
     """백테스트 결과를 평가하고, 최고 전략과 마지막 시그널을 찾아 출력 및 저장합니다."""
-    strategies = ['SMA', 'Golden_Cross']
+    strategies = ['SMA', 'Golden_Cross', 'MACD']
     total_string = ''
     results_list = []
 
@@ -52,37 +52,33 @@ def evaluate_backtest_results(tickers):
             max_return = performance_df['Return (%)'].iloc[max_return_idx]
             max_window = performance_df['Window'].iloc[max_return_idx]
 
-            # 마지막 시그널 가져오기
-            last_signal = performance_df['Action'].iloc[-1] if 'Action' in performance_df.columns else 'No Signal'
-
             # 해당 ticker의 성과 저장
             ticker_returns.append({
                 'Strategy': strategy,
                 'Window': max_window,
                 'Return': max_return,
-                'Last Signal': last_signal
             })
 
         # 각 티커에서 최대 Return을 가진 전략 및 Window 찾기
         # backtest 파일 경로 설정
-        backtest_path = os.path.join(RESULT_BACKTEST_PATH, f'{strategy}/{strategy}_{ticker}/backtest_{strategy}_{ticker}_{max_window}MA.csv')
+        backtest_path = os.path.join(RESULT_BACKTEST_PATH, f'{strategy}/{strategy}_{ticker}/backtest_{strategy}_{ticker}_{max_window}.csv')
         backtest_df = pd.read_csv(backtest_path)
 
         # 마지막 행의 'Action', 'Time', 'Close' 값 가져오기
         last_row = backtest_df.iloc[-1]  # 마지막 행
         last_action = last_row['Action']
+
         last_time = last_row['Time']
         last_close = last_row['Close']
 
         max_return_strategy = max(ticker_returns, key=lambda x: x['Return'])
-
+        
         # Best strategy 저장
         results_list.append({
             'Ticker': ticker,
             'Best Strategy': max_return_strategy['Strategy'],
             'Window': max_return_strategy['Window'],
             'Return (%)': max_return_strategy['Return'],
-            'Last Signal': max_return_strategy['Last Signal'],
             'Last Action': last_action,
             'Last Time': last_time,
             'Last Price': last_close

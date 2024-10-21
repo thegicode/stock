@@ -10,6 +10,16 @@ def calculate_short_long_moving_averages(df, short_window=50, long_window=200):
     return df
 
 
+def calculate_macd(df, short_window=12, long_window=26, signal_window=9):
+    """MACD와 신호선을 계산합니다."""
+    df['EMA_short'] = df['Close'].ewm(span=short_window, adjust=False).mean()
+    df['EMA_long'] = df['Close'].ewm(span=long_window, adjust=False).mean()
+    df['MACD'] = df['EMA_short'] - df['EMA_long']
+    df['Signal Line'] = df['MACD'].ewm(span=signal_window, adjust=False).mean()
+    df['Histogram'] = df['MACD'] - df['Signal Line']
+    return df
+
+
 def signal_positions_sma(df, window):
     # 기본 신호 값 설정
     df['Positions'] = 0
@@ -21,7 +31,7 @@ def signal_positions_sma(df, window):
     return df
 
 
-def signal_positions_golden_corss(df, short_window, long_window):
+def signal_positions_golden_corss(df):
     df['Positions'] = 0
 
     # 매수 조건: 단기 이동평균이 장기 이동평균을 상향 돌파
@@ -29,5 +39,18 @@ def signal_positions_golden_corss(df, short_window, long_window):
 
     # 매도 조건: 단기 이동평균이 장기 이동평균을 하향 돌파
     df.loc[df[f'short_MA'] < df[f'long_MA'], 'Positions'] = -1 
+
+    return df
+
+
+
+def signal_positions_macd(df):
+    df['Positions'] = 0
+
+    # 매수 조건: MACD가 Signal 위로 올라가면 매수
+    df.loc[df[f'MACD'] > df[f'Signal Line'], 'Positions'] = 1  
+
+    # 매도 조건: MACD가 Signal 아래로 내려가면 매도
+    df.loc[df[f'MACD'] < df[f'Signal Line'], 'Positions'] = -1 
 
     return df

@@ -28,6 +28,9 @@ python3 v2/backtest/sma_backtest.py
 Golden Cross
 python3 v2/backtest/goden_cross_backtest.py
 
+MACD
+python3 v2/backtest/macd_backtest.py
+
 # 해외 주식 api
 
 -   [Alpha Vantage](https://www.alphavantage.co/documentation/)

@@ -14,6 +14,9 @@ from v2.utils.file_utils import load_data, save_performance_to_file, save_trades
 from v2.utils.time_utils import extract_periods
 from v2.config.constants import TICKERS
 
+
+STRATEGE_NAME = 'SMA'
+
 # 매매 전략 시뮬레이션
 def sma_trading_simulation(df, initial_capital, sma_window, trading_fee):
     """SMA 기반 매매 전략을 시뮬레이션합니다."""
@@ -60,7 +63,7 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         trades_df = sma_trading_simulation(df, initial_capital, window, trading_fee)
 
         # 각 SMA 윈도우의 트랜잭션 기록 저장
-        save_trades_to_file(trades_df, f'SMA/SMA_{ticker}', f'SMA_{ticker}_{window}MA')
+        save_trades_to_file(trades_df, f'{STRATEGE_NAME}/{STRATEGE_NAME}_{ticker}', f'{STRATEGE_NAME}_{ticker}_{window}')
 
         # 성과 계산 및 'Window' 열 추가
         first_date, last_date = extract_periods(df)
@@ -82,7 +85,7 @@ def sma_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, windows=[5,
         performance_df = pd.concat(backtest_df, ignore_index=True)
 
         # 성과 요약 저장
-        save_performance_to_file(performance_df, 'SMA', f'SMA_{ticker}')
+        save_performance_to_file(performance_df, STRATEGE_NAME, f'{STRATEGE_NAME}_{ticker}')
 
         results[ticker] = performance_df
 
@@ -100,5 +103,5 @@ if __name__ == "__main__":
     results = sma_backtest_batch_run(tickers, count, capital, windows, fee)
 
     # 결과 출력
-    output = format_backtest_results(results, "SMA Backtest", count)
+    output = format_backtest_results(results, f"{STRATEGE_NAME} Backtest", count)
     print(output)
