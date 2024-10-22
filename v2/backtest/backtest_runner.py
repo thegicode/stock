@@ -114,7 +114,9 @@ def evaluate_backtest_results(tickers):
     print(f"\n{results_df}")
 
     # Best strategy 결과 파일로 저장
-    results_df.to_csv(os.path.join(RESULT_ANALYSIS_PATH, 'backtest_best_strategy.txt'), sep='\t', index=False)
+    csv_file_path = os.path.join(RESULT_ANALYSIS_PATH, 'backtest_best_strategy.csv')
+    results_df.to_csv(csv_file_path, index=False)
+    # results_df.to_csv(os.path.join(RESULT_ANALYSIS_PATH, 'backtest_best_strategy.txt'), sep='\t', index=False)
 
 
 def save_to_file(content, filename):
