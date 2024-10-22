@@ -13,7 +13,10 @@ from v2.backtest.goden_cross_backtest import golden_backtest_batch_run
 from v2.config.constants import RESULT_ANALYSIS_PATH, RESULT_BACKTEST_PATH, RESULT_PERFORMANCE_PATH, TICKERS
 from v2.backtest.macd_backtest import macd_backtest_batch_run
 from v2.backtest.rsi_backtest import rsi_backtest_batch_run
+from v2.backtest.bollinger_backtest import bollinger_backtest_batch_run
 
+
+STRATEGES =['SMA', 'Golden_Cross', 'MACD', 'RSI', 'Bollinger']
 
 def fetch_ticker_data(tickers, count=1000):
     """티커 데이터를 저장합니다."""
@@ -34,11 +37,13 @@ def run_backtests(tickers, count=100, capital=10000, windows=[5, 20, 60, 120], w
     windows=[6, 12,  14, 18, 24, 30]
     rsi_backtest_batch_run(tickers, count, capital, windows=windows, fee=fee)
 
+    windows = [20, 30, 60]
+    bollinger_backtest_batch_run(tickers, count, capital, windows=windows, fee=fee)
+
+
 
 def evaluate_backtest_results(tickers):
     """백테스트 결과를 평가하고, 최고 전략과 마지막 시그널을 찾아 출력 및 저장합니다."""
-    strategies = ['SMA', 'Golden_Cross', 'MACD', 'RSI']
-
     total_string = ''
     results_list = []
 
@@ -48,7 +53,7 @@ def evaluate_backtest_results(tickers):
         ticker_header = f"\n\n* {ticker} _____________"
         total_string += ticker_header
 
-        for strategy in strategies:
+        for strategy in STRATEGES:
             strategy_header = f"\n| {strategy}\n"
             total_string += strategy_header
 
@@ -120,7 +125,7 @@ def save_to_file(content, filename):
 def main_backtest_process(tickers):
     """백테스트 실행 및 평가 메인 함수"""
     # fetch_ticker_data(tickers)  # 티커 데이터 저장
-    run_backtests(tickers, count=500)  # 백테스트 실행
+    run_backtests(tickers, count=365)  # 백테스트 실행
     evaluate_backtest_results(tickers)  # 백테스트 평가
 
 

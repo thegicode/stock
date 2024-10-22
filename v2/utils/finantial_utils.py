@@ -30,6 +30,15 @@ def calculate_rsi(df, window=14):
     return df
 
 
+def calculate_bollinger_bands(df, window=20, num_std_dev=2):
+    """볼린저 밴드를 계산하여 데이터프레임에 추가합니다."""
+    df['Middle Band'] = df['Close'].rolling(window=window).mean()
+    df['Std Dev'] = df['Close'].rolling(window=window).std()
+    df['Upper Band'] = df['Middle Band'] + (df['Std Dev'] * num_std_dev)
+    df['Lower Band'] = df['Middle Band'] - (df['Std Dev'] * num_std_dev)
+    return df
+
+
 def signal_positions_sma(df, window):
     # 기본 신호 값 설정
     df['Positions'] = 0
@@ -75,3 +84,25 @@ def signal_positions_rsi(df, overbought=75, oversold=25):
     df.loc[df[f'RSI'] > overbought, 'Positions'] = -1  # 종가가 이동평균보다 낮으면 매도
 
     return df
+
+
+def signal_positions_bollinger(df):
+    """
+    불린저 밴드 기반의 매수/매도 시그널을 생성하는 함수.
+    
+    Args:
+        df (pd.DataFrame): 불린저 밴드가 포함된 데이터프레임
+    
+    Returns:
+        pd.DataFrame: 매수/매도 시그널이 추가된 데이터프레임
+    """
+    df['Positions'] = 0
+
+    # 매수 조건: 현재 주가가 하단 밴드 위로 올라오고, 이전 주가는 하단 밴드보다 작을 때
+    df.loc[(df['Close'] > df['Lower Band']) & (df['Close'].shift(1) <= df['Lower Band'].shift(1)), 'Positions'] = 1
+
+    # 매도 조건: 현재 주가가 상단 밴드 아래로 내려가고, 이전 주가는 상단 밴드보다 클 때
+    df.loc[(df['Close'] < df['Upper Band']) & (df['Close'].shift(1) >= df['Upper Band'].shift(1)), 'Positions'] = -1
+
+    return df
+
