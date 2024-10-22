@@ -16,7 +16,9 @@ from v2.backtest.rsi_backtest import rsi_backtest_batch_run
 from v2.backtest.bollinger_backtest import bollinger_backtest_batch_run
 
 
-STRATEGES =['SMA', 'Golden_Cross', 'MACD', 'RSI', 'Bollinger']
+COUNT = 365
+STRATEGES = ['SMA', 'Golden_Cross', 'MACD', 'RSI', 'Bollinger']
+
 
 def fetch_ticker_data(tickers, count=1000):
     """티커 데이터를 저장합니다."""
@@ -125,7 +127,7 @@ def save_to_file(content, filename):
 def main_backtest_process(tickers):
     """백테스트 실행 및 평가 메인 함수"""
     # fetch_ticker_data(tickers)  # 티커 데이터 저장
-    run_backtests(tickers, count=365)  # 백테스트 실행
+    run_backtests(tickers, count=COUNT)  # 백테스트 실행
     evaluate_backtest_results(tickers)  # 백테스트 평가
 
 

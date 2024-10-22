@@ -46,9 +46,9 @@ def save_ticker_data_to_csv(ticker_symbol, days):
 # 함수 실행 예시
 if __name__ == "__main__":
     # tickers = TICKERS
-    tickers = ["SRVR"]
+    tickers = ["000660.KS"]
 
-    count = 1000
+    count = 365
     for ticker in tickers:
         save_ticker_data_to_csv(ticker, count)
    

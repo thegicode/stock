@@ -8,11 +8,32 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '../../'))  # 루트 경로로 설정
 sys.path.append(project_root)  # 루트 경로를 sys.path에 추가
 
-from v2.config.constants import DATA_PATH
+from v2.config.constants import DATA_KOREA_PATH
 from v2.config.get_key import ACCESS_TOKEN, CLIENT_KEY, CLIENT_SECRET
 
+def format_time_column(df):
+    """
+    'Time' 열을 'YYYY-MM-DD HH:MM:SS-TZ' 형식으로 변환한 후, 과거 데이터가 먼저 오도록 정렬하는 함수.
+    
+    Args:
+        df (pd.DataFrame): 시간 데이터가 포함된 DataFrame
+    
+    Returns:
+        pd.DataFrame: 변환 및 정렬된 시간 데이터
+    """
+    # 'Time' 열을 날짜 형식으로 변환 (예: '20241022' -> '2024-10-22')
+    df['Time'] = pd.to_datetime(df['Time'], format='%Y%m%d')
 
-def get_daily_data(ticker_code, max_records=1000):
+    # 원하는 타임존 설정 (-05:00 시간대)
+    df['Time'] = df['Time'].dt.tz_localize('UTC').dt.tz_convert('America/New_York')
+
+    # 'Time' 열을 기준으로 오름차순(과거 데이터가 먼저 오도록) 정렬
+    df = df.sort_values(by='Time', ascending=True)
+
+    return df
+
+
+def koreainvest_save_ticker_data_to_csv(ticker_code, max_records=1000):
     """
     ACE 미국 S&P500 ETF의 최대 일별 데이터를 가져오는 함수.
 
@@ -66,10 +87,11 @@ def get_daily_data(ticker_code, max_records=1000):
     df = pd.DataFrame(all_data)
     display_columns = ['stck_bsop_date', 'stck_clpr', 'stck_oprc', 'stck_hgpr', 'stck_lwpr', 'acml_vol']
     df = df[display_columns]
-    df.columns = ['Date', 'Close', 'Open', 'High', 'Low', 'Volume']
+    df.columns = ['Time', 'Close', 'Open', 'High', 'Low', 'Volume']
+    df = format_time_column(df)
 
-    csv_file_path = f'{DATA_PATH}/daily_data_{ticker_code}.csv'
-    df.to_csv(csv_file_path, index=False)
+    csv_file_path = f'{DATA_KOREA_PATH}/{ticker_code}_history.csv'
+    df.to_csv(csv_file_path, index=True)
     print(f"데이터가 '{csv_file_path}' 파일로 저장되었습니다.")
 
     return df
@@ -78,5 +100,5 @@ def get_daily_data(ticker_code, max_records=1000):
 if __name__ == "__main__":  
     # 사용 예시
     ticker_code = "305540"  # ACE 미국 S&P500 ETF 코드
-    daily_data = get_daily_data(ticker_code, max_records=1000)  # 원하는 최대 레코드 수 지정
+    daily_data = koreainvest_save_ticker_data_to_csv(ticker_code, max_records=1000)  # 원하는 최대 레코드 수 지정
     print(daily_data)
