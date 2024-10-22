@@ -68,20 +68,27 @@ def evaluate_backtest_results(tickers):
 
             # 'Return (%)'의 최대값과 그에 해당하는 'Window' 값 찾기
             max_return_idx = performance_df['Return (%)'].idxmax()  # 최대값의 인덱스
+            max_performance_df = performance_df.iloc(max_return_idx)
             max_return = performance_df['Return (%)'].iloc[max_return_idx]
             max_window = performance_df['Window'].iloc[max_return_idx]
+            max_win_rate = performance_df['Win Rate (%)'].iloc[max_return_idx]
+            max_mdd = performance_df['Max Drawdown (%)'].iloc[max_return_idx]
 
             # 해당 ticker의 성과 저장
             ticker_returns.append({
                 'Strategy': strategy,
                 'Window': max_window,
                 'Return': max_return,
+                'Win Rate': max_win_rate,
+                'MDD': max_mdd
             })
 
 
         max_return_strategy = max(ticker_returns, key=lambda x: x['Return'])
         best_strategy = max_return_strategy['Strategy']
         best_window = max_return_strategy['Window']
+        best_win_rate = max_return_strategy['Win Rate']
+        best_mdd = max_return_strategy['MDD']
 
         # 각 티커에서 최대 Return을 가진 전략 및 Window 찾기
         # backtest 파일 경로 설정
@@ -91,7 +98,6 @@ def evaluate_backtest_results(tickers):
         # 마지막 행의 'Action', 'Time', 'Close' 값 가져오기
         last_row = backtest_df.iloc[-1]  # 마지막 행
         last_action = last_row['Action']
-
         last_time = pd.to_datetime(last_row['Time']).date()
         last_close = last_row['Close']
 
@@ -105,6 +111,8 @@ def evaluate_backtest_results(tickers):
             'Best Strategy': best_strategy,
             'Window': best_window,
             'Return (%)': max_return_strategy['Return'],
+            'Win Rate (%)': best_win_rate, 
+            'MDD (%)': best_mdd, 
             'Last Action': last_action,
             'Last Time': last_time,
             'Last Price': last_close,
