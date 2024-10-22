@@ -9,7 +9,7 @@ TICKERS = [
     "QQQM", 
     "SCHD", 
     "AAPL", 
-    "BRK-B",
+    # "BRK-B",
     "MSFT", 
     "NVDA", 
     "AMZN", 

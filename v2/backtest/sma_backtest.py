@@ -23,7 +23,7 @@ def sma_trading_simulation(df, initial_capital, sma_window, trading_fee):
 
 
 # 백테스트 로직
-def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], trading_fee=0):
+def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], trading_fee=0.001):
     """특정 심볼에 대한 SMA 기반 백테스트 실행"""
     results = []
     for window in windows:
@@ -45,7 +45,7 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
 
 
 # 여러 티커에 대한 백테스트 실행
-def sma_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, windows=[5, 20], fee=0):
+def sma_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, windows=[5, 20], fee=0.001):
     results = {}
     for ticker in tickers:
         backtest_df = sma_backtest(ticker, count, capital, windows, fee)

@@ -2,7 +2,6 @@ import sys
 import os
 import pandas as pd
 
-
 # 프로젝트 루트 경로를 sys.path에 추가
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '../../'))
@@ -13,6 +12,7 @@ from v2.backtest.sma_backtest import sma_backtest_batch_run
 from v2.backtest.goden_cross_backtest import golden_backtest_batch_run
 from v2.config.constants import RESULT_ANALYSIS_PATH, RESULT_BACKTEST_PATH, RESULT_PERFORMANCE_PATH, TICKERS
 from v2.backtest.macd_backtest import macd_backtest_batch_run
+from v2.backtest.rsi_backtest import rsi_backtest_batch_run
 
 
 def fetch_ticker_data(tickers, count=1000):
@@ -23,16 +23,21 @@ def fetch_ticker_data(tickers, count=1000):
 
 def run_backtests(tickers, count=100, capital=10000, windows=[5, 20, 60, 120], window_combinations=[(5, 20), (5, 40), (10, 20), (10, 40)], fee=0.001):
     """SMA와 Golden Cross 백테스트를 실행합니다."""
+
     sma_backtest_batch_run(tickers, count, capital, windows, fee)
+    
     golden_backtest_batch_run(tickers, count, capital, window_combinations, fee)
     
     windows=[(12, 16, 9)]
     macd_backtest_batch_run(tickers, count, capital, windows, fee)
 
+    windows=[6, 12,  14, 18, 24, 30]
+    rsi_backtest_batch_run(tickers, count, capital, windows=windows, fee=fee)
+
 
 def evaluate_backtest_results(tickers):
     """백테스트 결과를 평가하고, 최고 전략과 마지막 시그널을 찾아 출력 및 저장합니다."""
-    strategies = ['SMA', 'Golden_Cross', 'MACD']
+    strategies = ['SMA', 'Golden_Cross', 'MACD', 'RSI']
 
     total_string = ''
     results_list = []

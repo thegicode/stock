@@ -22,7 +22,7 @@ def golden_cross_trading_simulation(df, initial_capital, short_window, long_wind
     return generic_trading_simulation(df, initial_capital, trading_fee, position_col='Positions', ma_cols=[f'short_MA', f'long_MA'])
 
 
-def golden_cross_backtest(ticker="VOO", count=30, initial_capital=10000, window_combinations=[[5, 20]], trading_fee=0):
+def golden_cross_backtest(ticker="VOO", count=30, initial_capital=10000, window_combinations=[[5, 20]], trading_fee=0.001):
     """특정 심볼에 대한 SMA 기반 백테스트 실행"""
     results = []
 
@@ -45,7 +45,7 @@ def golden_cross_backtest(ticker="VOO", count=30, initial_capital=10000, window_
     return results
 
 
-def golden_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, window_combinations=[(5, 20)], fee=0):
+def golden_backtest_batch_run(tickers=["VOO"], count=10, capital=10000, window_combinations=[(5, 20)], fee=0.001):
     results = {}
     for ticker in tickers:
         backtest_df = golden_cross_backtest(ticker, count, capital, window_combinations, fee)

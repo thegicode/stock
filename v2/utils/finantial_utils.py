@@ -20,6 +20,16 @@ def calculate_macd(df, short_window=12, long_window=26, signal_window=9):
     return df
 
 
+def calculate_rsi(df, window=14):
+    """RSI 계산."""
+    delta = df['Close'].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    df['RSI'] = 100 - (100 / (1 + rs))
+    return df
+
+
 def signal_positions_sma(df, window):
     # 기본 신호 값 설정
     df['Positions'] = 0
@@ -52,5 +62,16 @@ def signal_positions_macd(df):
 
     # 매도 조건: MACD가 Signal 아래로 내려가면 매도
     df.loc[df[f'MACD'] < df[f'Signal Line'], 'Positions'] = -1 
+
+    return df
+
+
+def signal_positions_rsi(df, overbought=75, oversold=25):
+    # 기본 신호 값 설정
+    df['Positions'] = 0
+
+    # 이동 평균의 변화에 따른 매수 및 매도 신호 생성
+    df.loc[df[f'RSI'] < oversold, 'Positions'] = 1  # 종가가 이동평균보다 높으면 매수
+    df.loc[df[f'RSI'] > overbought, 'Positions'] = -1  # 종가가 이동평균보다 낮으면 매도
 
     return df

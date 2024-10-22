@@ -21,7 +21,7 @@ def calculate_performance(trades_df, initial_capital, first_date, last_date ):
 
     win_rate = calculate_win_rate(trades_df)
 
-    mdd_percent = binance_calculate_mdd(trades_df, initial_capital)
+    mdd_percent = calculate_mdd(trades_df, initial_capital)
 
     performance =  {
         'Trades': trade_count,
@@ -69,8 +69,6 @@ def calculate_total_returns(trades_df, initial_capital):
     return total_profit, total_returns
 
 
-
-
 def calculate_win_rate(trades_df):
     """
     승률을 계산하는 함수
@@ -94,7 +92,7 @@ def calculate_win_rate(trades_df):
     return win_rate
 
 
-def binance_calculate_mdd(trades_df, initial_capital):
+def calculate_mdd(trades_df, initial_capital):
     """
     최대 낙폭(MDD)을 계산하는 함수
 
