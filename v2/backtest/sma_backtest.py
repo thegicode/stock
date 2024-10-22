@@ -9,7 +9,7 @@ sys.path.append(project_root)
 
 from v2.utils.finantial_utils import calculate_moving_averages, signal_positions_sma
 from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order, generic_trading_simulation
-from v2.utils.performance_utils import calculate_performance, format_backtest_results
+from v2.utils.performance_utils import calculate_performance, format_backtest_results, save_and_evaluate_performance
 from v2.utils.file_utils import load_data, save_performance_to_file, save_trades_to_file
 from v2.utils.time_utils import extract_periods
 from v2.config.constants import TICKERS
@@ -36,13 +36,8 @@ def sma_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[5], tra
         # 매매 시뮬레이션 실행
         trades_df = sma_trading_simulation(df, initial_capital, window, trading_fee)
 
-        # 각 SMA 윈도우의 트랜잭션 기록 저장
-        save_trades_to_file(trades_df, f'{STRATEGE_NAME}/{STRATEGE_NAME}_{ticker}', f'{STRATEGE_NAME}_{ticker}_{window}')
-
-        # 성과 계산 및 'Window' 열 추가
-        first_date, last_date = extract_periods(df)
-        performance_df = calculate_performance(trades_df, initial_capital, first_date, last_date)
-        performance_df.insert(0, 'Window', window)
+        # 성과 계산 및 저장 함수 호출
+        performance_df = save_and_evaluate_performance(trades_df, df, initial_capital, STRATEGE_NAME, ticker, f"{window}")
 
         results.append(performance_df)
 

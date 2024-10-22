@@ -8,7 +8,7 @@ project_root = os.path.abspath(os.path.join(current_dir, '../../'))
 sys.path.append(project_root)
 
 from v2.config.constants import TICKERS
-from v2.utils.performance_utils import calculate_performance, format_backtest_results
+from v2.utils.performance_utils import calculate_performance, format_backtest_results, save_and_evaluate_performance
 from v2.utils.file_utils import load_data, save_performance_to_file, save_trades_to_file
 from v2.utils.finantial_utils import calculate_macd, signal_positions_macd
 from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order, generic_trading_simulation
@@ -38,13 +38,8 @@ def macd_backtest(ticker="VOO", count=30, initial_capital=10000, windows=[(12, 1
         # 매매 시뮬레이션 실행
         trades_df = macd_trading_simulation(df, initial_capital, trading_fee)
 
-        # 각 트랜잭션 기록 저장
-        save_trades_to_file(trades_df, f'{STRATEGE_NAME}/{STRATEGE_NAME}_{ticker}', f'{STRATEGE_NAME}_{ticker}_{short_window}_{long_window}_{signal_window}')
-
-        # 성과 계산 및 'Window' 열 추가
-        first_date, last_date = extract_periods(df)
-        performance_df = calculate_performance(trades_df, initial_capital, first_date, last_date)
-        performance_df.insert(0, 'Window', f"{short_window}_{long_window}_{signal_window}")
+        # 성과 계산 및 저장 함수 호출
+        performance_df = save_and_evaluate_performance(trades_df, df, initial_capital, STRATEGE_NAME, ticker, f"{short_window}_{long_window}_{signal_window}")
 
         results.append(performance_df)
 

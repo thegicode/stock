@@ -2,12 +2,14 @@
 import sys
 import os
 import pandas as pd
+
 # 프로젝트 루트 경로를 sys.path에 추가
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '../../'))  # 루트 경로로 설정
 sys.path.append(project_root)  # 루트 경로를 sys.path에 추가
 
 from v2.utils.time_utils import extract_periods
+from v2.utils.file_utils import save_trades_to_file
 
 
 def calculate_performance(trades_df, initial_capital, first_date, last_date ):
@@ -138,3 +140,31 @@ def format_backtest_results(backtest_results, backtest_name, count):
         output += "\n"
 
     return output
+
+
+def save_and_evaluate_performance(trades_df, df, initial_capital, strategy_name, ticker, window_label):
+    """
+    트랜잭션 기록을 저장하고, 성과를 계산한 후 반환하는 함수.
+
+    Args:
+        trades_df (pd.DataFrame): 트랜잭션 기록 데이터프레임
+        df (pd.DataFrame): 원본 데이터프레임 (시그널 및 가격 포함)
+        initial_capital (float): 초기 자본
+        strategy_name (str): 전략 이름 (예: 'SMA' 또는 'Golden_Cross')
+        ticker (str): 티커 심볼
+        window_label (str): 윈도우 라벨 (예: '5', '10_20')
+
+    Returns:
+        pd.DataFrame: 성과 데이터프레임
+    """
+    # 트랜잭션 기록 저장
+    save_trades_to_file(trades_df, f'{strategy_name}/{strategy_name}_{ticker}', f'{strategy_name}_{ticker}_{window_label}')
+
+    # 성과 계산
+    first_date, last_date = extract_periods(df)
+    performance_df = calculate_performance(trades_df, initial_capital, first_date, last_date)
+
+    # 'Window' 열 추가
+    performance_df.insert(0, 'Window', window_label)
+
+    return performance_df
