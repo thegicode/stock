@@ -14,6 +14,7 @@ from v2.config.constants import RESULT_ANALYSIS_PATH, RESULT_BACKTEST_PATH, RESU
 from v2.backtest.macd_backtest import macd_backtest_batch_run
 from v2.backtest.rsi_backtest import rsi_backtest_batch_run
 from v2.backtest.bollinger_backtest import bollinger_backtest_batch_run
+from v2.apis.yfinance_stock_name import get_stock_name
 
 
 COUNT = 365
@@ -93,7 +94,11 @@ def evaluate_backtest_results(tickers):
 
         last_time = pd.to_datetime(last_row['Time']).date()
         last_close = last_row['Close']
-        
+
+        ks_stock_name = ''
+        if '.KS' in ticker:
+            ks_stock_name =  get_stock_name(ticker)
+
         # Best strategy 저장
         results_list.append({
             'Ticker': ticker,
@@ -102,7 +107,8 @@ def evaluate_backtest_results(tickers):
             'Return (%)': max_return_strategy['Return'],
             'Last Action': last_action,
             'Last Time': last_time,
-            'Last Price': last_close
+            'Last Price': last_close,
+            'KS Name': ks_stock_name
         })
 
     # 백테스트 평가 결과 파일 저장 및 출력
