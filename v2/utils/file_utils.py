@@ -38,6 +38,7 @@ def save_trades_to_file(df, result_dir, file_name):
     # Ensure the result directory exists
     os.makedirs(result_dir, exist_ok=True)
     file_path = os.path.join(result_dir, file_name)
+    # print(f"Save to : {file_path}")
 
     # Save to CSV
     df.to_csv(file_path, index=False)

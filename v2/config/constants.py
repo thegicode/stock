@@ -6,13 +6,26 @@ RESULT_ANALYSIS_PATH = './v2/results/analysis'
 
 TICKERS = [
     "VOO", 
-    "QQQ", 
+    "QQQM", 
     "SCHD", 
     "AAPL", 
+    "BRK-B",
     "MSFT", 
     "NVDA", 
     "AMZN", 
     "TSLA", 
-    "GOOGL"
+    "GOOGL",
+    "UBER",
+    "CIBR",
+    "ITB",
+    "IWM",
+    "SOXX",
+    "SRVR",
+    "TLT",
+    "VEA",
+    "VNQ",
+    "XBI",
+    "XLU",
+    "XLY"
 ]
 

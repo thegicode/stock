@@ -8,7 +8,7 @@ project_root = os.path.abspath(os.path.join(current_dir, '../../'))
 sys.path.append(project_root)
 
 from v2.utils.finantial_utils import calculate_moving_averages, signal_positions_sma
-from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order
+from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order, generic_trading_simulation
 from v2.utils.performance_utils import calculate_performance, format_backtest_results
 from v2.utils.file_utils import load_data, save_performance_to_file, save_trades_to_file
 from v2.utils.time_utils import extract_periods
@@ -17,35 +17,9 @@ from v2.config.constants import TICKERS
 
 STRATEGE_NAME = 'SMA'
 
-# 매매 전략 시뮬레이션
+
 def sma_trading_simulation(df, initial_capital, sma_window, trading_fee):
-    """SMA 기반 매매 전략을 시뮬레이션합니다."""
-    trades = []
-    in_position = False
-    capital = initial_capital
-    buy_price = 0
-
-    for i in range(1, len(df)):
-        close_price = df['Close'].iloc[i]
-        current_time = df['Time'].iloc[i]
-        position_signal = df['Positions'].iloc[i]
-        sma_price = df[f'{sma_window}MA'].iloc[i]
-
-        # 매수 조건: Positions 값이 1이고 포지션이 없는 경우
-        if position_signal == 1 and not in_position:
-            buy_price, quantity, capital = calculate_buy_order(close_price, capital, trading_fee)
-            in_position = True
-            trades.append(('buy', current_time, close_price, sma_price, quantity, capital, None, None))
-
-        # 매도 조건: Positions 값이 -1이고 포지션이 있는 경우
-        elif position_signal == -1 and in_position:
-            sell_price, capital, profit, return_rate = calculate_sell_order(close_price, buy_price, quantity, capital, trading_fee)
-            in_position = False
-            trades.append(('sell', current_time, close_price, sma_price, quantity, capital, profit, return_rate))
-
-    trades_df = pd.DataFrame(trades, columns=['Action', 'Time', 'Close', f'{sma_window}MA', 'Quantity', 'Capital', 'Profit', 'Return Rate (%)'])
-    trades_df = trades_df.fillna('')  # NaN 값을 빈 문자열로 대체
-    return trades_df
+    return generic_trading_simulation(df, initial_capital, trading_fee, position_col='Positions', ma_cols=[f'{sma_window}MA'])
 
 
 # 백테스트 로직

@@ -12,42 +12,14 @@ from v2.config.constants import TICKERS
 from v2.utils.performance_utils import calculate_performance, format_backtest_results
 from v2.utils.finantial_utils import calculate_short_long_moving_averages, signal_positions_golden_corss
 from v2.utils.time_utils import extract_periods
-from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order
+from v2.utils.trade_utils import calculate_buy_order, calculate_sell_order, generic_trading_simulation
 
 
 STRATEGE_NAME = 'Golden_Cross'
 
+
 def golden_cross_trading_simulation(df, initial_capital, short_window, long_window, trading_fee):
-    """SMA 기반 매매 전략을 시뮬레이션합니다."""
-    trades = []
-    in_position = False
-    capital = initial_capital
-    buy_price = 0
-
-    for i in range(1, len(df)):
-        close_price = df['Close'].iloc[i]
-        current_time = df['Time'].iloc[i]
-        position_signal = df['Positions'].iloc[i]
-        short_ma_value = df[f'short_MA'].iloc[i]
-        long_ma_value = df[f'long_MA'].iloc[i]
-
-        # 매수 조건: Positions 값이 1이고 포지션이 없는 경우
-        if position_signal == 1 and not in_position:
-            buy_price, quantity, capital = calculate_buy_order(close_price, capital, trading_fee)
-            in_position = True
-            trades.append(('buy', current_time, close_price, short_ma_value, long_ma_value, quantity, capital, None, None))
-
-        # 매도 조건: Positions 값이 -1이고 포지션이 있는 경우
-        elif position_signal == -1 and in_position:
-            sell_price, capital, profit, return_rate = calculate_sell_order(close_price, buy_price, quantity, capital, trading_fee)
-            in_position = False
-            trades.append(('sell', current_time, close_price, short_ma_value, long_ma_value, quantity, capital, profit, return_rate))
-    
-    
-    trades_df = pd.DataFrame(trades, columns=['Action', 'Time', 'Close', f'{short_window}MA', f'{long_window}MA', 'Quantity', 'Capital', 'Profit', 'Return Rate (%)'])
-    trades_df = trades_df.fillna('')  # NaN 값을 빈 문자열로 대체
-
-    return trades_df
+    return generic_trading_simulation(df, initial_capital, trading_fee, position_col='Positions', ma_cols=[f'short_MA', f'long_MA'])
 
 
 def golden_cross_backtest(ticker="VOO", count=30, initial_capital=10000, window_combinations=[[5, 20]], trading_fee=0):
