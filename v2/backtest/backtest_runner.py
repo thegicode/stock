@@ -46,15 +46,10 @@ def results_to_file(results_df):
     # Return (%), Win Rate (%)는 소수점 없이, Last Price는 소수점 5자리로 포맷팅하고 세 자리마다 쉼표 추가
     mobile_friendly_df['Return (%)'] = mobile_friendly_df['Return (%)'].round(0).astype(int)
     mobile_friendly_df['Win Rate (%)'] = mobile_friendly_df['Win Rate (%)'].round(0).astype(int)
-    mobile_friendly_df['Last Price'] = mobile_friendly_df['Last Price'].apply(lambda x: f"{x:,.1f}")
+    mobile_friendly_df['Last Price'] = mobile_friendly_df['Last Price'].apply(lambda x: f"{x:,.2f}")
 
     # 모바일용 결과를 엑셀 파일로 저장
     mobile_xlsx_file_path = os.path.join(RESULT_ANALYSIS_PATH, 'backtest_best_strategy_mobile.xlsx')
-
-    # Styler를 사용하여 짝수 행에 연한 배경색(#ebffeb)을 넣음
-    def highlight_even_rows(row):
-        return ['background-color: #ebffeb' if row.name % 2 == 0 else '' for _ in row]
-
 
     # 'Last Price' 열은 오른쪽 정렬, 'Last Action'과 'Last Time'은 가운데 정렬
     styled_df = mobile_friendly_df.style.apply(highlight_even_rows, axis=1)\
@@ -63,10 +58,32 @@ def results_to_file(results_df):
 
     styled_df.to_excel(mobile_xlsx_file_path, index=False, engine='openpyxl')
 
+    # 첫 번째 행을 고정
+    freeze_first_row(mobile_xlsx_file_path)
+
     # 열 너비와 행 높이 조정
     adjust_excel_formatting(mobile_xlsx_file_path)
 
     print(f"결과가 '{csv_file_path}, {mobile_xlsx_file_path}'에 저장되었습니다.")
+
+
+# Styler를 사용하여 짝수 행에 연한 배경색을 넣음
+def highlight_even_rows(row):
+    return ['background-color: #e1f0e9' if row.name % 2 != 0 else '' for _ in row]
+
+
+def freeze_first_row(file_path):
+    """
+    첫 번째 행을 고정하는 함수
+    """
+    workbook = load_workbook(file_path)
+    sheet = workbook.active
+
+    # 첫 번째 행 고정
+    sheet.freeze_panes = sheet['A2']  # A2 셀을 기준으로 첫 번째 행을 고정
+
+    # 저장
+    workbook.save(file_path)
 
 
 def adjust_excel_formatting(file_path):
