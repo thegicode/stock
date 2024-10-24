@@ -1,6 +1,6 @@
 
 DATA_PATH = "./v2/data/"
-DATA_KOREA_PATH = "./v2/data/korea"
+DATA_KOR_PATH = "./v2/data/kor"
 RESULT_BACKTEST_PATH = './v2/results/backtest'
 RESULT_PERFORMANCE_PATH = './v2/results/performance'
 RESULT_ANALYSIS_PATH = './v2/results/analysis'

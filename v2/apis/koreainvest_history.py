@@ -8,7 +8,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, '../../'))  # 루트 경로로 설정
 sys.path.append(project_root)  # 루트 경로를 sys.path에 추가
 
-from v2.config.constants import DATA_KOREA_PATH
+from v2.config.constants import DATA_KOR_PATH
 from v2.config.get_key import ACCESS_TOKEN, CLIENT_KEY, CLIENT_SECRET
 
 def format_time_column(df):
@@ -90,7 +90,7 @@ def koreainvest_save_ticker_data_to_csv(ticker_code, max_records=1000):
     df.columns = ['Time', 'Close', 'Open', 'High', 'Low', 'Volume']
     df = format_time_column(df)
 
-    csv_file_path = f'{DATA_KOREA_PATH}/{ticker_code}_history.csv'
+    csv_file_path = f'{DATA_KOR_PATH}/{ticker_code}_history.csv'
     df.to_csv(csv_file_path, index=True)
     print(f"데이터가 '{csv_file_path}' 파일로 저장되었습니다.")
 
