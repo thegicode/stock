@@ -48,7 +48,7 @@ def get_market_cap_kor(ticker):
 
         # 시가총액 계산
         market_cap = stock_price * shares_outstanding
-        print(f"종목 코드: {ticker}, 시가총액: {market_cap}")
+        # print(f"종목 코드: {ticker}, 시가총액: {market_cap}")
         return market_cap
 
     except KeyError:
